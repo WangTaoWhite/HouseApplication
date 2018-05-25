@@ -8,39 +8,48 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/house"
+        android:drawableStart="@mipmap/house"
         android:gravity="center"
         android:text="@string/house"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/name_edit"
-        android:layout_width="@dimen/login_edit_width"
-        android:layout_height="@dimen/login_edit_height"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/name_edit_input_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/edit_rectangle"
-        android:hint="@string/name"
-        android:paddingStart="4dp"
-        android:textSize="12sp" />
+        android:layout_marginTop="50dp">
 
-    <EditText
-        android:id="@+id/pwd_edit"
-        android:layout_width="@dimen/login_edit_width"
-        android:layout_height="@dimen/login_edit_height"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/edit_rectangle"
-        android:hint="@string/password"
-        android:paddingStart="4dp"
-        android:textSize="12sp" />
+        <EditText
+            android:id="@+id/name_edit"
+            android:layout_width="@dimen/login_edit_width"
+            android:layout_height="@dimen/login_edit_height"
+            android:hint="@string/name"
+            android:paddingStart="4dp"
+            android:textSize="12sp" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/pwd_edit_input_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/pwd_edit"
+            android:layout_width="@dimen/login_edit_width"
+            android:layout_height="@dimen/login_edit_height"
+            android:hint="@string/password"
+            android:paddingStart="4dp"
+            android:textSize="12sp" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/login_btn"
         android:layout_width="@dimen/login_edit_width"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/login_btn_rectangle"
         android:text="@string/login" />
 
@@ -83,21 +92,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/weixin" />
+            android:src="@mipmap/weixin" />
 
         <ImageView
             android:id="@+id/qq_img"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/qq" />
+            android:src="@mipmap/qq" />
 
         <ImageView
             android:id="@+id/sina_img"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/sina" />
+            android:src="@mipmap/sina" />
     </LinearLayout>
 
 </LinearLayout>

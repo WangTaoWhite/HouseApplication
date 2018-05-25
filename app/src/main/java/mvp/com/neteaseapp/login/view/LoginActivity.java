@@ -2,6 +2,9 @@ package mvp.com.neteaseapp.login.view;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -13,17 +16,22 @@ public class LoginActivity extends Activity implements ViewInterface, View.OnCli
 
     private LoginPresenter mLoginPresenter;
     private EditText mPwdEdit, mNameEdit;
+    private TextInputLayout mPwdEditInputLayout, mNameEditInputLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
         mLoginPresenter = new LoginPresenter(this);
+        initView();
+        initOnClick();
     }
 
     private void initView() {
         mPwdEdit = findViewById(R.id.pwd_edit);
         mNameEdit = findViewById(R.id.name_edit);
+        mPwdEditInputLayout = findViewById(R.id.pwd_edit_input_layout);
+        mNameEditInputLayout = findViewById(R.id.name_edit_input_layout);
     }
 
     private void initOnClick() {
@@ -33,6 +41,49 @@ public class LoginActivity extends Activity implements ViewInterface, View.OnCli
         findViewById(R.id.weixin_img).setOnClickListener(this);
         findViewById(R.id.qq_img).setOnClickListener(this);
         findViewById(R.id.sina_img).setOnClickListener(this);
+        mPwdEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String string = s.toString();
+                if (string.length() > 6) {
+                    mPwdEditInputLayout.setErrorEnabled(true);
+                    mPwdEditInputLayout.setError("输入长度不能大于6！");
+                }
+            }
+        });
+
+        mNameEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String string = s.toString();
+                if (string.length() > 6) {
+                    mNameEditInputLayout.setErrorEnabled(true);
+                    mNameEditInputLayout.setError("输入长度不能大于6！");
+                } else {
+                    mNameEditInputLayout.setErrorEnabled(false);
+                }
+            }
+        });
     }
 
 
