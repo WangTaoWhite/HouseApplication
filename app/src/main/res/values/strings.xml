@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NeteaseApp</string>
+    <string name="login">登 录</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="house">欢迎来到House</string>
+    <string name="forget_pwd">忘记密码</string>
+    <string name="register">注 册</string>
+    <string name="third_login">其他</string>
+</resources>

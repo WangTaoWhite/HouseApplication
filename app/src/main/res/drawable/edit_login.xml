@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/login_edit_width"
+    android:height="@dimen/login_edit_height"
+    android:viewportHeight="45"
+    android:viewportWidth="150">
+
+    <path
+        android:name="login_line"
+        android:pathData="M0,45 L150,45"
+        android:strokeAlpha="0.8"
+        android:strokeColor="@color/colorAccent"
+        android:strokeLineCap="square"
+        android:strokeWidth="1" />
+</vector>
