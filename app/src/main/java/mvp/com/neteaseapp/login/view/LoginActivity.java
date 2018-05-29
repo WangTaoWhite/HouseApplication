@@ -1,14 +1,17 @@
 package mvp.com.neteaseapp.login.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import mvp.com.neteaseapp.R;
+import mvp.com.neteaseapp.content.MainActivity;
 import mvp.com.neteaseapp.login.presenter.LoginPresenter;
 
 
@@ -44,20 +47,18 @@ public class LoginActivity extends Activity implements ViewInterface, View.OnCli
         mPwdEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String string = s.toString();
-                if (string.length() > 6) {
+                if (string.length() > 20) {
                     mPwdEditInputLayout.setErrorEnabled(true);
-                    mPwdEditInputLayout.setError("输入长度不能大于6！");
+                    mPwdEditInputLayout.setError("输入长度不能大于20！");
                 }
             }
         });
@@ -65,20 +66,18 @@ public class LoginActivity extends Activity implements ViewInterface, View.OnCli
         mNameEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String string = s.toString();
-                if (string.length() > 6) {
+                if (string.length() > 10) {
                     mNameEditInputLayout.setErrorEnabled(true);
-                    mNameEditInputLayout.setError("输入长度不能大于6！");
+                    mNameEditInputLayout.setError("输入长度不能大于10！");
                 } else {
                     mNameEditInputLayout.setErrorEnabled(false);
                 }
@@ -86,18 +85,25 @@ public class LoginActivity extends Activity implements ViewInterface, View.OnCli
         });
     }
 
-
     @Override
     public void loginFail(String code) {
-
+        Toast.makeText(this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void loginSuccess(String response) {
-
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void startLogin(String name, String pwd) {
+        if (name == null || pwd == null) {
+            Toast.makeText(this, getString(R.string.account_hint), Toast.LENGTH_SHORT).show();
+        }
         mLoginPresenter.doLogin(name, pwd);
     }
 

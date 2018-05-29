@@ -12,4 +12,6 @@
     <string name="video">视频</string>
     <string name="news">新闻</string>
     <string name="loading">加载中.....</string>
+    <string name="login_fail">登录失败，请检查密码和账号是否正确</string>
+    <string name="account_hint">请输入账号和密码</string>
 </resources>
