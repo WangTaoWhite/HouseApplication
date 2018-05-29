@@ -1,4 +1,4 @@
-package mvp.com.neteaseapp.content.news;
+package mvp.com.neteaseapp.content.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +17,9 @@ import mvp.com.neteaseapp.R;
 
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
-    private static final int TYPE_ITEM = 0;
-    private static final int TYPE_FOOTER = 1;
+    private static final int TYPE_ITEM_ONE = 1;
+    private static final int TYPE_ITEM_THREE = 2;
+    private static final int TYPE_FOOTER = 3;
 
     private List<String> mDatas;
     private Context mContext;
@@ -32,15 +33,10 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public void addDataInHeader(List<String> data) {
-//        for (int i = 0; i < mDatas.size(); i++)
-//            data.add(mDatas.get(i));
-//        mDatas = data;
         mDatas.addAll(0, data);
     }
 
-    public void addDataInFooter(List<String> data){
-//        for (int i = 0; i < data.size(); i++)
-//            mDatas.add(data.get(i));
+    public void addDataInFooter(List<String> data) {
         mDatas.addAll(data);
     }
 
@@ -49,19 +45,25 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         // 最后一个item设置为footerView
         if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
+        } else if (position % 2 == 0) {
+            return TYPE_ITEM_THREE;
         } else {
-            return TYPE_ITEM;
+            return TYPE_ITEM_ONE;
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_ITEM) {
-            View view = inflater.inflate(R.layout.news_item_layout, parent, false);
-            view.findViewById(R.id.news_items_text).setOnClickListener(this);
-            return new NewsViewHolder(view);
+        if (viewType == TYPE_ITEM_ONE) {
+            View view = inflater.inflate(R.layout.item_one_layout, parent, false);
+            view.findViewById(R.id.item_one_layout).setOnClickListener(this);
+            return new ItemOneViewHolder(view);
+        } else if (viewType == TYPE_ITEM_THREE) {
+            View view = inflater.inflate(R.layout.item_three_layout, parent, false);
+            view.findViewById(R.id.item_three_layout).setOnClickListener(this);
+            return new ItemThreeViewHolder(view);
         } else if (viewType == TYPE_FOOTER) {
-            View view = inflater.inflate(R.layout.footer_layout, parent, false);
+            View view = inflater.inflate(R.layout.recycleview_footer_layout, parent, false);
             return new FooterViewHolder(view);
         }
         return null;
@@ -76,8 +78,10 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder != null) {
-            if (holder instanceof NewsViewHolder) {
-                ((NewsViewHolder) holder).textView.setText(mDatas.get(position));
+            if (holder instanceof ItemThreeViewHolder) {
+                ((ItemThreeViewHolder) holder).textView.setText(mDatas.get(position));
+            } else if (holder instanceof ItemOneViewHolder) {
+                ((ItemOneViewHolder) holder).textView.setText(mDatas.get(position));
             }
         }
     }
@@ -87,10 +91,19 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         mItemClickInterface.recyclerViewItemClick();
     }
 
-    private class NewsViewHolder extends RecyclerView.ViewHolder {
+    private class ItemThreeViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
 
-        NewsViewHolder(View itemView) {
+        ItemThreeViewHolder(View itemView) {
+            super(itemView);
+            textView = itemView.findViewById(R.id.news_items_text);
+        }
+    }
+
+    private class ItemOneViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+
+        public ItemOneViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.news_items_text);
         }

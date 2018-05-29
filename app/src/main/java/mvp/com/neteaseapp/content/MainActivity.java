@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mvp.com.neteaseapp.R;
-import mvp.com.neteaseapp.content.news.NewsFragment;
-import mvp.com.neteaseapp.content.news.ViewPagerFragmentAdapter;
+import mvp.com.neteaseapp.content.view.BaseFragment;
+import mvp.com.neteaseapp.content.view.NewsFragment;
+import mvp.com.neteaseapp.content.view.VideoFragment;
+import mvp.com.neteaseapp.content.view.ViewPagerFragmentAdapter;
 import mvp.com.neteaseapp.customview.ColorTextView;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
@@ -30,7 +32,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private String[] mTitles = new String[]{"新闻", "视频", "图片", "关注"};
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
-    private NewsFragment[] mFragments = new NewsFragment[mTitles.length];
+    private BaseFragment[] mFragments = new BaseFragment[mTitles.length];
     private List<ColorTextView> mTabs = new ArrayList<ColorTextView>();
 
     @Override
@@ -48,9 +50,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mMenuImage = findViewById(R.id.menu_image);
         mViewPager = findViewById(R.id.content_viewpager);
 
-        for (int i = 0; i < mTitles.length; i++) {
-            mFragments[i] = NewsFragment.getInstance(mTitles[i]);
-        }
+        mFragments[0] = NewsFragment.getInstance(mTitles[0]);
+        mFragments[1] = VideoFragment.getInstance(mTitles[1]);
+        mFragments[2] = NewsFragment.getInstance(mTitles[2]);
+        mFragments[3] = NewsFragment.getInstance(mTitles[3]);
+
         mAdapter = new ViewPagerFragmentAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(0);

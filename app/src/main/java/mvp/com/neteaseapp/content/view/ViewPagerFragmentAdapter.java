@@ -1,18 +1,16 @@
-package mvp.com.neteaseapp.content.news;
+package mvp.com.neteaseapp.content.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import mvp.com.neteaseapp.content.news.NewsFragment;
-
 /**
  * Created by wangtao on 2018/5/25.
  */
 public class ViewPagerFragmentAdapter extends FragmentPagerAdapter {
-    private NewsFragment[] mNewsFragment;
+    private BaseFragment[] mNewsFragment;
 
-    public ViewPagerFragmentAdapter(FragmentManager fragmentManager, NewsFragment[] mFragments) {
+    public ViewPagerFragmentAdapter(FragmentManager fragmentManager, BaseFragment[] mFragments) {
         super(fragmentManager);
         mNewsFragment = mFragments;
     }

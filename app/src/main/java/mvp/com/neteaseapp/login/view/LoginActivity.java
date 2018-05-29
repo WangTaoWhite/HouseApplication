@@ -88,9 +88,6 @@ public class LoginActivity extends Activity implements ViewInterface, View.OnCli
     @Override
     public void loginFail(String code) {
         Toast.makeText(this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override
