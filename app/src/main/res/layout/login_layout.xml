@@ -50,7 +50,7 @@
         android:layout_width="@dimen/login_edit_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="@drawable/login_btn_rectangle"
+        android:background="@drawable/btn_transition"
         android:text="@string/login" />
 
     <LinearLayout
