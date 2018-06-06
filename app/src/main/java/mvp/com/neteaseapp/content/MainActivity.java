@@ -1,5 +1,6 @@
 package mvp.com.neteaseapp.content;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -15,25 +16,31 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.finalteam.galleryfinal.GalleryFinal;
+import cn.finalteam.galleryfinal.model.PhotoInfo;
 import mvp.com.neteaseapp.R;
 import mvp.com.neteaseapp.content.view.BaseFragment;
 import mvp.com.neteaseapp.content.view.NewsFragment;
 import mvp.com.neteaseapp.content.view.VideoFragment;
 import mvp.com.neteaseapp.content.view.ViewPagerFragmentAdapter;
+import mvp.com.neteaseapp.customview.CircleView;
 import mvp.com.neteaseapp.customview.ColorTextView;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
+    private static final int REQUEST_CODE_GALLERY = 1;
     private int mPrePosition = 0;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ImageView mMenuImage;
+    private CircleView mUserIcon;
 
     private String[] mTitles = new String[]{"新闻", "视频", "图片", "关注"};
     private ViewPager mViewPager;
     private FragmentPagerAdapter mAdapter;
     private BaseFragment[] mFragments = new BaseFragment[mTitles.length];
     private List<ColorTextView> mTabs = new ArrayList<ColorTextView>();
+    private GalleryFinal.OnHanlderResultCallback mOnHanlderResultCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         initView();
         initViewListener();
+        initData();
     }
 
     private void initView() {
@@ -49,6 +57,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mNavigationView = findViewById(R.id.navigation_view);
         mMenuImage = findViewById(R.id.menu_image);
         mViewPager = findViewById(R.id.content_viewpager);
+        View view = mNavigationView.getHeaderView(0);
+        mUserIcon = view.findViewById(R.id.user_icon);
 
         mFragments[0] = NewsFragment.getInstance(mTitles[0]);
         mFragments[1] = VideoFragment.getInstance(mTitles[1]);
@@ -68,6 +78,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void initViewListener() {
         mMenuImage.setOnClickListener(this);
+        mUserIcon.setOnClickListener(this);
 
         //点击侧滑菜单中的item
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -113,6 +124,23 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
+    private void initData() {
+        mOnHanlderResultCallback = new GalleryFinal.OnHanlderResultCallback() {
+            @Override
+            public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
+                if (reqeustCode == REQUEST_CODE_GALLERY) {
+                    mUserIcon.setImageBitmap(BitmapFactory.decodeFile(resultList.get(0).getPhotoPath()));
+                }
+            }
+
+            @Override
+            public void onHanlderFailure(int requestCode, String errorMsg) {
+
+            }
+        };
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -139,7 +167,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mPrePosition = mViewPager.getCurrentItem();
                 mViewPager.setCurrentItem(3);
                 break;
-
+            case R.id.user_icon:
+                GalleryFinal.openGallerySingle(REQUEST_CODE_GALLERY, mOnHanlderResultCallback);
+                break;
 
         }
     }

@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -82,6 +85,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 ((ItemThreeViewHolder) holder).textView.setText(mDatas.get(position));
             } else if (holder instanceof ItemOneViewHolder) {
                 ((ItemOneViewHolder) holder).textView.setText(mDatas.get(position));
+                Glide.with(mContext).load("http://a4.att.hudong.com/05/71/01300000057455120185716259013.jpg")
+                        .into(((ItemOneViewHolder) holder).imageView);
             }
         }
     }
@@ -102,10 +107,12 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private class ItemOneViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+        ImageView imageView;
 
         public ItemOneViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.news_items_text);
+            imageView = itemView.findViewById(R.id.news_item_image);
         }
     }
 
