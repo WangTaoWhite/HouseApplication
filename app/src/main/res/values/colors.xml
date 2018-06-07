@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorGray">#D3D3D3</color>
     <color name="colorGreen">#3399FF</color>
-    <color name="colorAccent1">#FF33CC</color>
-    <color name="colorAccent2">#FF0099</color>
-    <color name="colorAccent3">#FF0099</color>
+    <color name="colorAccent1">#FF40A1</color>
+    <color name="colorAccent2">#FF40B1</color>
+    <color name="colorAccent3">#FF40C1</color>
 </resources>
