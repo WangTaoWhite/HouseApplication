@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import mvp.com.neteaseapp.util.LogUtil;
+
 /**
  * Created by wangtao on 2018/5/25.
  */
@@ -61,7 +63,7 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
                  */
                 if (newState == RecyclerView.SCROLL_STATE_IDLE &&
                         (mLastVisibleItem + 1) == mNewsRecyclerViewAdapter.getItemCount()) { //滑到最后一个item
-                    Log.d(TAG, "onScrollStateChanged: 滑到最后一个item 进行异步加载数据");
+                    LogUtil.d(TAG, "onScrollStateChanged: 滑到最后一个item 进行异步加载数据");
                     mNewsRecyclerViewAdapter.addDataInFooter(getDatas());
                     mNewsRecyclerViewAdapter.notifyDataSetChanged();
                 }
@@ -71,7 +73,7 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 mLastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-                Log.d(TAG, "onScrolled: mLastVisibleItem = " + mLastVisibleItem);
+                LogUtil.d(TAG, "onScrolled: mLastVisibleItem = " + mLastVisibleItem);
             }
         });
 
@@ -100,7 +102,7 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
 
     @Override
     public void recyclerViewItemClick() {
-        Log.d(TAG, "recyclerViewItemClick: ");
+        LogUtil.d(TAG, "recyclerViewItemClick: ");
     }
 
     private ArrayList<String> getDatas() {

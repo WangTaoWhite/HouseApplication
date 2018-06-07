@@ -1,13 +1,19 @@
 package mvp.com.neteaseapp.content;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,8 +22,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.finalteam.galleryfinal.GalleryFinal;
-import cn.finalteam.galleryfinal.model.PhotoInfo;
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import mvp.com.neteaseapp.R;
 import mvp.com.neteaseapp.content.view.BaseFragment;
 import mvp.com.neteaseapp.content.view.NewsFragment;
@@ -25,6 +31,9 @@ import mvp.com.neteaseapp.content.view.VideoFragment;
 import mvp.com.neteaseapp.content.view.ViewPagerFragmentAdapter;
 import mvp.com.neteaseapp.customview.CircleView;
 import mvp.com.neteaseapp.customview.ColorTextView;
+import mvp.com.neteaseapp.util.LogUtil;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -40,7 +49,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private FragmentPagerAdapter mAdapter;
     private BaseFragment[] mFragments = new BaseFragment[mTitles.length];
     private List<ColorTextView> mTabs = new ArrayList<ColorTextView>();
-    private GalleryFinal.OnHanlderResultCallback mOnHanlderResultCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +57,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         initView();
         initViewListener();
-        initData();
     }
 
     private void initView() {
@@ -124,22 +131,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    private void initData() {
-        mOnHanlderResultCallback = new GalleryFinal.OnHanlderResultCallback() {
-            @Override
-            public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
-                if (reqeustCode == REQUEST_CODE_GALLERY) {
-                    mUserIcon.setImageBitmap(BitmapFactory.decodeFile(resultList.get(0).getPhotoPath()));
-                }
-            }
-
-            @Override
-            public void onHanlderFailure(int requestCode, String errorMsg) {
-
-            }
-        };
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -168,9 +159,74 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mViewPager.setCurrentItem(3);
                 break;
             case R.id.user_icon:
-                GalleryFinal.openGallerySingle(REQUEST_CODE_GALLERY, mOnHanlderResultCallback);
+                if (requestPermission()) {
+                    MultiImageSelector.create()
+                            .single()
+                            .start(this, REQUEST_CODE_GALLERY);
+                }
                 break;
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_GALLERY) {
+            LogUtil.d("WTF", "onActivityResult: requestCode == REQUEST_CODE_GALLERY");
+            if (data != null) {
+                List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                if (path != null) {
+                    mUserIcon.setImageBitmap(BitmapFactory.decodeFile(path.get(0)));
+                }
+            }
+        }
+    }
+
+    private boolean requestPermission() {
+        // 版本判断。当手机系统大于 23 时，才有必要去判断权限是否获取
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ArrayList<String> array = new ArrayList<>();
+            //判断是否有准许这个权限 GRANTED---授权  DINIED---拒绝
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PERMISSION_GRANTED) {
+                array.add(Manifest.permission.CAMERA);
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+                array.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+                array.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+
+            String[] permission = new String[array.size()];
+            for (int i = 0; i < array.size(); i++) {
+                permission[i] = array.get(i);
+            }
+            //开始提交请求权限
+            ActivityCompat.requestPermissions(this, permission, 1);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] == PERMISSION_GRANTED) {
+                    if (permissions[i].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        MultiImageSelector.create()
+                                .single()
+                                .start(this, REQUEST_CODE_GALLERY);
+                    }
+
+                } else {
+                    Toast.makeText(this, "" + "权限" + permissions[i] + "申请失败", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 }

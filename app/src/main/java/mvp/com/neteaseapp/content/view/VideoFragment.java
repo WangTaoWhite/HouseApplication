@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import mvp.com.neteaseapp.util.LogUtil;
+
 /**
  * Created by wangtao on 2018/5/29.
  */
@@ -56,7 +58,7 @@ public class VideoFragment extends BaseFragment implements VideoRecyclerViewAdap
                  */
                 if (newState == RecyclerView.SCROLL_STATE_IDLE &&
                         (mLastVisibleItem + 1) == mVideoRecyclerViewAdapter.getItemCount()) { //滑到最后一个item
-                    Log.d(TAG, "onScrollStateChanged: 滑到最后一个item 进行异步加载数据");
+                    LogUtil.d(TAG, "onScrollStateChanged: 滑到最后一个item 进行异步加载数据");
                     mVideoRecyclerViewAdapter.addDataInFooter(getUrlData());
                     mVideoRecyclerViewAdapter.notifyDataSetChanged();
                 }
@@ -66,7 +68,7 @@ public class VideoFragment extends BaseFragment implements VideoRecyclerViewAdap
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 mLastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-                Log.d(TAG, "onScrolled: mLastVisibleItem = " + mLastVisibleItem);
+                LogUtil.d(TAG, "onScrolled: mLastVisibleItem = " + mLastVisibleItem);
             }
         });
     }

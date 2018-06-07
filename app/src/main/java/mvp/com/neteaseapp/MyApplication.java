@@ -1,16 +1,7 @@
 package mvp.com.neteaseapp;
 
-import android.app.Activity;
 import android.app.Application;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-
-import cn.finalteam.galleryfinal.CoreConfig;
-import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.GalleryFinal;
-import cn.finalteam.galleryfinal.ImageLoader;
-import cn.finalteam.galleryfinal.ThemeConfig;
-import cn.finalteam.galleryfinal.widget.GFImageView;
+import android.os.StrictMode;
 
 /**
  * Created by wangtao on 2018/6/6.
@@ -21,40 +12,11 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ThemeConfig theme = new ThemeConfig.Builder()
-                .setTitleBarBgColor(Color.rgb(0xFF, 0x57, 0x22))
-                .setTitleBarTextColor(Color.BLACK)
-                .setTitleBarIconColor(Color.BLACK)
-                .setFabNornalColor(Color.RED)
-                .setFabPressedColor(Color.BLUE)
-                .setCheckNornalColor(Color.WHITE)
-                .setCheckSelectedColor(Color.BLACK)
-                .build();
 
-        //配置功能
-        FunctionConfig functionConfig = new FunctionConfig.Builder()
-                .setEnableCamera(true)
-                .setEnableEdit(true)
-                .setEnableCrop(true)
-                .setEnableRotate(true)
-                .setCropSquare(true)
-                .setEnablePreview(true)
-                .build();
-        //配置imageloader
-        ImageLoader imageloader = new ImageLoader() {
-            @Override
-            public void displayImage(Activity activity, String path, GFImageView imageView, Drawable defaultDrawable, int width, int height) {
-
-            }
-
-            @Override
-            public void clearMemoryCache() {
-
-            }
-        };
-        CoreConfig coreConfig = new CoreConfig.Builder(this, imageloader, theme)
-                .setFunctionConfig(functionConfig)
-                .build();
-        GalleryFinal.init(coreConfig);
+        // android 7.0系统解决拍照的问题
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
     }
+
 }
