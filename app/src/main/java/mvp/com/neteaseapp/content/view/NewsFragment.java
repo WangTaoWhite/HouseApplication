@@ -108,7 +108,7 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
     private ArrayList<String> getDatas() {
         ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < 20; i++)
-            list.add("item" + i + Math.random());
+            list.add("中国新闻网是知名的中文新闻门户网站,也是全球互联网中文新闻资讯最重要的原创内容供应商之一。");
         return list;
     }
 

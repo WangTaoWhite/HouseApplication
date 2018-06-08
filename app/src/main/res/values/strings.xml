@@ -3,10 +3,9 @@
     <string name="login">sign in</string>
     <string name="name">name</string>
     <string name="password">password</string>
-    <string name="house">L O G I N</string>
     <string name="forget_pwd">forget</string>
     <string name="register">sign up</string>
-    <string name="third_login">or login with</string>
+    <string name="third_login">or</string>
     <string name="attention">关注</string>
     <string name="image">图片</string>
     <string name="video">视频</string>
@@ -14,4 +13,8 @@
     <string name="loading">加载中.....</string>
     <string name="login_fail">登录失败，请检查密码和账号是否正确</string>
     <string name="account_hint">请输入账号和密码</string>
+    <string name="travel">旅行</string>
+    <string name="news_item_name">旅行者 20评论 10分钟前</string>
+    <string name="news_item_name2">都市森立</string>
+    <string name="video_item_title">新闻服务平台,真实反映每时每刻的新闻热点。</string>
 </resources>

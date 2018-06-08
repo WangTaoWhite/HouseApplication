@@ -9,11 +9,13 @@
         android:id="@+id/user_icon"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginTop="30dp"
         android:src="@mipmap/koala" />
 
     <TextView
         android:id="@+id/user_signature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="人生像一场没有尽头的旅行." />
 </LinearLayout>

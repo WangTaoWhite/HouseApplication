@@ -25,12 +25,13 @@ public class LoginActivity extends Activity implements ViewInterface, View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
-        mLoginPresenter = new LoginPresenter(this);
+
         initView();
         initOnClick();
     }
 
     private void initView() {
+        mLoginPresenter = new LoginPresenter(this);
         mPwdEdit = findViewById(R.id.pwd_edit);
         mNameEdit = findViewById(R.id.name_edit);
         mPwdEditInputLayout = findViewById(R.id.pwd_edit_input_layout);
@@ -59,6 +60,8 @@ public class LoginActivity extends Activity implements ViewInterface, View.OnCli
                 if (string.length() > 20) {
                     mPwdEditInputLayout.setErrorEnabled(true);
                     mPwdEditInputLayout.setError("输入长度不能大于20！");
+                } else {
+                    mPwdEditInputLayout.setErrorEnabled(false);
                 }
             }
         });

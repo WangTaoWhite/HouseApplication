@@ -85,8 +85,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 ((ItemThreeViewHolder) holder).textView.setText(mDatas.get(position));
             } else if (holder instanceof ItemOneViewHolder) {
                 ((ItemOneViewHolder) holder).textView.setText(mDatas.get(position));
-                Glide.with(mContext).load("http://a4.att.hudong.com/05/71/01300000057455120185716259013.jpg")
-                        .into(((ItemOneViewHolder) holder).imageView);
+//                Glide.with(mContext).load("http://a4.att.hudong.com/05/71/01300000057455120185716259013.jpg")
+//                        .into(((ItemOneViewHolder) holder).imageView);
             }
         }
     }

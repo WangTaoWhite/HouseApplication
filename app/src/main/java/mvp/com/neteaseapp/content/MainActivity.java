@@ -13,10 +13,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private int mPrePosition = 0;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
-    private ImageView mMenuImage;
+    private TextView mMenuTitle;
     private CircleView mUserIcon;
 
     private String[] mTitles = new String[]{"新闻", "视频", "图片", "关注"};
@@ -62,7 +61,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void initView() {
         mDrawerLayout = findViewById(R.id.main_drawer_layout);
         mNavigationView = findViewById(R.id.navigation_view);
-        mMenuImage = findViewById(R.id.menu_image);
+        mMenuTitle = findViewById(R.id.menu_title);
         mViewPager = findViewById(R.id.content_viewpager);
         View view = mNavigationView.getHeaderView(0);
         mUserIcon = view.findViewById(R.id.user_icon);
@@ -84,7 +83,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void initViewListener() {
-        mMenuImage.setOnClickListener(this);
+        mMenuTitle.setOnClickListener(this);
         mUserIcon.setOnClickListener(this);
 
         //点击侧滑菜单中的item
@@ -135,7 +134,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.menu_image:
+            case R.id.menu_title:
                 if (mDrawerLayout.isDrawerOpen(mNavigationView)) {
                     mDrawerLayout.closeDrawer(mNavigationView);
                 } else {
