@@ -26,6 +26,7 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import mvp.com.neteaseapp.R;
 import mvp.com.neteaseapp.content.view.BaseFragment;
 import mvp.com.neteaseapp.content.view.NewsFragment;
+import mvp.com.neteaseapp.content.view.PictureFragment;
 import mvp.com.neteaseapp.content.view.VideoFragment;
 import mvp.com.neteaseapp.content.view.ViewPagerFragmentAdapter;
 import mvp.com.neteaseapp.customview.CircleView;
@@ -68,7 +69,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mFragments[0] = NewsFragment.getInstance(mTitles[0]);
         mFragments[1] = VideoFragment.getInstance(mTitles[1]);
-        mFragments[2] = NewsFragment.getInstance(mTitles[2]);
+        mFragments[2] = PictureFragment.getInstance(mTitles[2]);
         mFragments[3] = NewsFragment.getInstance(mTitles[3]);
 
         mAdapter = new ViewPagerFragmentAdapter(getSupportFragmentManager(), mFragments);
@@ -227,5 +228,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_video_layout"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="220dp">
 
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
         android:id="@+id/video_item_player"
         android:layout_width="match_parent"
-        android:layout_height="220dp" />
+        android:layout_height="200dp" />
 
     <TextView
         android:id="@+id/video_title"
@@ -19,35 +19,52 @@
         android:text="@string/video_item_title"
         android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/video_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/news_item_name2" />
-
     <mvp.com.neteaseapp.customview.CircleView
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
+        android:layout_marginStart="5dp"
         android:src="@mipmap/tulips" />
 
-    <ImageView
-        android:id="@+id/video_item_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/video_bottom_lay"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:src="@mipmap/more" />
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/video_item_attention"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
-        android:layout_toStartOf="@id/video_item_more"
-        android:text="@string/attention" />
+        <TextView
+            android:id="@+id/video_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="3"
+            android:text="@string/news_item_user" />
+
+        <TextView
+            android:id="@+id/video_item_attention"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:text="@string/attention" />
+
+        <TextView
+            android:id="@+id/video_item_common"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:text="@string/common" />
+
+        <ImageView
+            android:id="@+id/video_item_more"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:src="@mipmap/more" />
+    </LinearLayout>
+
 </RelativeLayout>

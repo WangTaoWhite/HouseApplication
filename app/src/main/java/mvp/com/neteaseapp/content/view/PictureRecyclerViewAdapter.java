@@ -5,31 +5,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import mvp.com.neteaseapp.R;
 
 /**
  * Created by wangtao on 2018/5/25.
  */
 
-public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class PictureRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private static final int TYPE_ITEM_ONE = 1;
-    private static final int TYPE_FOOTER = 2;
+    private static final int TYPE_FOOTER = 3;
 
     private List<String> mDatas;
     private Context mContext;
     private LayoutInflater inflater;
     private RecyclerViewItemClickInterface mItemClickInterface;
 
-    public VideoRecyclerViewAdapter(Context context, List<String> data) {
+    public PictureRecyclerViewAdapter(Context context, List<String> data) {
         mContext = context;
         mDatas = data;
         inflater = LayoutInflater.from(mContext);
@@ -56,7 +55,8 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM_ONE) {
-            View view = inflater.inflate(R.layout.item_video_layout, parent, false);
+            View view = inflater.inflate(R.layout.item_pic_layout, parent, false);
+            view.findViewById(R.id.item_pic_layout).setOnClickListener(this);
             return new ItemOneViewHolder(view);
         } else if (viewType == TYPE_FOOTER) {
             View view = inflater.inflate(R.layout.recycleview_footer_layout, parent, false);
@@ -75,9 +75,9 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder != null) {
             if (holder instanceof ItemOneViewHolder) {
-               ((ItemOneViewHolder) holder).videoView.setUp(mDatas.get(position),JCVideoPlayer.SCREEN_LAYOUT_LIST, "");
-                Glide.with(mContext).load("http://a4.att.hudong.com/05/71/01300000057455120185716259013.jpg").
-                            into(((ItemOneViewHolder) holder).videoView.thumbImageView);
+//                Glide.with(mContext).load("http://a4.att.hudong.com/05/71/01300000057455120185716259013.jpg")
+//                        .into(((ItemOneViewHolder) holder).imageView);
+                Glide.with(mContext).load(R.mipmap.pic_item).into(((ItemOneViewHolder) holder).imageView);
             }
         }
     }
@@ -87,12 +87,15 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         mItemClickInterface.recyclerViewItemClick();
     }
 
-    private class ItemOneViewHolder extends RecyclerView.ViewHolder {
-        JCVideoPlayerStandard videoView;
 
-         ItemOneViewHolder(View itemView) {
+    private class ItemOneViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        ImageView imageView;
+
+        public ItemOneViewHolder(View itemView) {
             super(itemView);
-            videoView = itemView.findViewById(R.id.video_item_player);
+            textView = itemView.findViewById(R.id.pic_item_content);
+            imageView = itemView.findViewById(R.id.pic_item_image);
         }
     }
 
@@ -107,7 +110,7 @@ public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         mItemClickInterface = clickInterface;
     }
 
-    interface RecyclerViewItemClickInterface {
+    public interface RecyclerViewItemClickInterface {
         void recyclerViewItemClick();
     }
 }

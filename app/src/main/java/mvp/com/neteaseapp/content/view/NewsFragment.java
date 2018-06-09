@@ -51,6 +51,8 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
         mNewsRecyclerViewAdapter = new NewsRecyclerViewAdapter(getActivity(), getDatas());
         mNewsRecyclerViewAdapter.setItemClickInterface(this); //自定义回调接口
 
+        //设置分隔线
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayout.VERTICAL));
         mRecyclerView.setAdapter(mNewsRecyclerViewAdapter);
         //设置监听滑动状态和位置
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
