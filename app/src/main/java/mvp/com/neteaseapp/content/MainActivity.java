@@ -198,6 +198,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 array.add(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
 
+            if (array.size() == 0) {  //已经申请
+                return true;
+            }
             String[] permission = new String[array.size()];
             for (int i = 0; i < array.size(); i++) {
                 permission[i] = array.get(i);
