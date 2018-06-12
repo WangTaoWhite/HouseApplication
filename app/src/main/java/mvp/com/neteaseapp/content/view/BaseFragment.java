@@ -16,18 +16,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import mvp.com.neteaseapp.R;
+import mvp.com.neteaseapp.content.presenter.ContentPresenter;
 
 /**
  * Created by wangtao on 2018/5/25.
  */
 
-public abstract class BaseFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ContentViewInterface {
     protected static String TAG = "WTF";
     protected static final String TITLE = "title";
     protected String mTitle = "Default";
     protected RecyclerView mRecyclerView;
     protected SwipeRefreshLayout mSwipeRefreshLayout;
     protected LinearLayoutManager mLayoutManager;
+    protected ContentPresenter mContentPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public abstract class BaseFragment extends Fragment implements SwipeRefreshLayou
         if (getArguments() != null) {
             mTitle = getArguments().getString(TITLE);
         }
+        mContentPresenter = new ContentPresenter(this);
     }
 
     @Nullable

@@ -18,7 +18,7 @@ import mvp.com.neteaseapp.util.LogUtil;
  * Created by wangtao on 2018/5/25.
  */
 
-public class PictureFragment extends BaseFragment implements PictureRecyclerViewAdapter.RecyclerViewItemClickInterface{
+public class PictureFragment extends BaseFragment implements PictureRecyclerViewAdapter.RecyclerViewItemClickInterface {
     private PictureRecyclerViewAdapter mPicRecyclerViewAdapter;
     private int mLastVisibleItem;
 
@@ -63,8 +63,7 @@ public class PictureFragment extends BaseFragment implements PictureRecyclerView
                 if (newState == RecyclerView.SCROLL_STATE_IDLE &&
                         (mLastVisibleItem + 1) == mPicRecyclerViewAdapter.getItemCount()) { //滑到最后一个item
                     LogUtil.d(TAG, "onScrollStateChanged: 滑到最后一个item 进行异步加载数据");
-                    mPicRecyclerViewAdapter.addDataInFooter(getDatas());
-                    mPicRecyclerViewAdapter.notifyDataSetChanged();
+                    mContentPresenter.getPicRequest();
                 }
             }
 
@@ -86,17 +85,7 @@ public class PictureFragment extends BaseFragment implements PictureRecyclerView
 
     @Override
     void refreshAndLoadData() {
-        mPicRecyclerViewAdapter.addDataInHeader(getDatas());
-        mPicRecyclerViewAdapter.notifyDataSetChanged();
-
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // 模拟网络加载时间，设置不可见
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        }, 1000);
+        mContentPresenter.getPicRequest();
     }
 
     @Override
@@ -111,4 +100,22 @@ public class PictureFragment extends BaseFragment implements PictureRecyclerView
         return list;
     }
 
+    /**
+     * 请求网络数据
+     */
+    @Override
+    public void getRequestSuccess() {
+        // 设置加载不可见
+        mSwipeRefreshLayout.setRefreshing(false);
+        mPicRecyclerViewAdapter.addDataInHeader(getDatas());
+        mPicRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getRequestFail() {
+        // 设置加载不可见
+        mSwipeRefreshLayout.setRefreshing(false);
+        mPicRecyclerViewAdapter.addDataInHeader(getDatas());
+        mPicRecyclerViewAdapter.notifyDataSetChanged();
+    }
 }

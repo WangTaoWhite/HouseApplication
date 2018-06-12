@@ -11,15 +11,17 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import mvp.com.neteaseapp.content.presenter.ContentPresenter;
 import mvp.com.neteaseapp.util.LogUtil;
 
 /**
  * Created by wangtao on 2018/5/29.
  */
 
-public class VideoFragment extends BaseFragment implements VideoRecyclerViewAdapter.RecyclerViewItemClickInterface{
+public class VideoFragment extends BaseFragment implements VideoRecyclerViewAdapter.RecyclerViewItemClickInterface {
     private VideoRecyclerViewAdapter mVideoRecyclerViewAdapter;
     private int mLastVisibleItem;
+
 
     public static VideoFragment getInstance(String title) {
         VideoFragment videoFragment = new VideoFragment();
@@ -59,8 +61,7 @@ public class VideoFragment extends BaseFragment implements VideoRecyclerViewAdap
                 if (newState == RecyclerView.SCROLL_STATE_IDLE &&
                         (mLastVisibleItem + 1) == mVideoRecyclerViewAdapter.getItemCount()) { //滑到最后一个item
                     LogUtil.d(TAG, "onScrollStateChanged: 滑到最后一个item 进行异步加载数据");
-                    mVideoRecyclerViewAdapter.addDataInFooter(getUrlData());
-                    mVideoRecyclerViewAdapter.notifyDataSetChanged();
+                    mContentPresenter.getVideoRequest();
                 }
             }
 
@@ -73,19 +74,13 @@ public class VideoFragment extends BaseFragment implements VideoRecyclerViewAdap
         });
     }
 
+    /**
+     * 下拉刷新时执行的方法
+     * SwipeRefreshLayout.OnRefreshListener中的onRefresh
+     */
     @Override
     void refreshAndLoadData() {
-        mVideoRecyclerViewAdapter.addDataInHeader(getUrlData());
-        mVideoRecyclerViewAdapter.notifyDataSetChanged();
-
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // 模拟网络加载时间，设置不可见
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        }, 1000);
+        mContentPresenter.getVideoRequest();
     }
 
     private ArrayList<String> getUrlData() {
@@ -109,5 +104,24 @@ public class VideoFragment extends BaseFragment implements VideoRecyclerViewAdap
     public void onPause() {
         super.onPause();
 
+    }
+
+    /**
+     * 请求网络数据
+     */
+    @Override
+    public void getRequestSuccess() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        mVideoRecyclerViewAdapter.addDataInFooter(getUrlData());
+        mVideoRecyclerViewAdapter.notifyDataSetChanged();
+        LogUtil.d(TAG, "thread =" + Thread.currentThread().getName());
+    }
+
+    @Override
+    public void getRequestFail() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        mVideoRecyclerViewAdapter.addDataInFooter(getUrlData());
+        mVideoRecyclerViewAdapter.notifyDataSetChanged();
+        LogUtil.d(TAG, "thread =" + Thread.currentThread().getName());
     }
 }

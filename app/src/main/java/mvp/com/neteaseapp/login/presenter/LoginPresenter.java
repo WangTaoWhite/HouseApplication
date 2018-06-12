@@ -8,7 +8,7 @@ import mvp.com.neteaseapp.login.view.ViewInterface;
  * Created by wangtao on 2018/5/24.
  */
 
-public class LoginPresenter implements PresenterInterface, LoginRequestCallBack {
+public class LoginPresenter implements LoginPresenterInter, LoginRequestCallBack {
 
     private ViewInterface mViewInterface;
 

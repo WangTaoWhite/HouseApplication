@@ -1,9 +1,11 @@
 package mvp.com.neteaseapp;
 
+import mvp.com.neteaseapp.content.request.ContentResponse;
 import mvp.com.neteaseapp.login.bean.LoginResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -16,4 +18,7 @@ public interface RetrofitRequestInterface {
     @POST("login")
     @FormUrlEncoded
     Call<LoginResponse> doLogin(@Field("username") String name, @Field("password") String pwd);
+
+    @GET("getURL")
+    Call<ContentResponse> getContentRequest();
 }

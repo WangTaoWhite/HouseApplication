@@ -66,8 +66,7 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
                 if (newState == RecyclerView.SCROLL_STATE_IDLE &&
                         (mLastVisibleItem + 1) == mNewsRecyclerViewAdapter.getItemCount()) { //滑到最后一个item
                     LogUtil.d(TAG, "onScrollStateChanged: 滑到最后一个item 进行异步加载数据");
-                    mNewsRecyclerViewAdapter.addDataInFooter(getDatas());
-                    mNewsRecyclerViewAdapter.notifyDataSetChanged();
+                    mContentPresenter.getNewsRequest();
                 }
             }
 
@@ -89,17 +88,7 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
 
     @Override
     void refreshAndLoadData() {
-        mNewsRecyclerViewAdapter.addDataInHeader(getDatas());
-        mNewsRecyclerViewAdapter.notifyDataSetChanged();
-
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // 模拟网络加载时间，设置不可见
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        }, 1000);
+        mContentPresenter.getNewsRequest();
     }
 
     @Override
@@ -114,4 +103,23 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
         return list;
     }
 
+    /**
+     * 请求网络数据
+     */
+    @Override
+    public void getRequestSuccess() {
+        // 设置加载不可见
+        mSwipeRefreshLayout.setRefreshing(false);
+        mNewsRecyclerViewAdapter.addDataInHeader(getDatas());
+        mNewsRecyclerViewAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void getRequestFail() {
+        // 设置加载不可见
+        mSwipeRefreshLayout.setRefreshing(false);
+        mNewsRecyclerViewAdapter.addDataInHeader(getDatas());
+        mNewsRecyclerViewAdapter.notifyDataSetChanged();
+    }
 }
