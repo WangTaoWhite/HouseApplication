@@ -18,4 +18,5 @@
     <string name="news_item_name">旅行者 20评论 10分钟前</string>
     <string name="news_item_user">都市森立</string>
     <string name="video_item_title">新闻服务平台,真实反映每时每刻的新闻热点。</string>
+    <string name="content_hint">写评论...</string>
 </resources>

@@ -1,5 +1,7 @@
 package mvp.com.neteaseapp.content.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -21,7 +23,7 @@ import mvp.com.neteaseapp.util.LogUtil;
  * Created by wangtao on 2018/5/25.
  */
 
-public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapter.RecyclerViewItemClickInterface{
+public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapter.RecyclerViewItemClickInterface {
     private NewsRecyclerViewAdapter mNewsRecyclerViewAdapter;
     private int mLastVisibleItem;
 
@@ -94,6 +96,12 @@ public class NewsFragment extends BaseFragment implements NewsRecyclerViewAdapte
     @Override
     public void recyclerViewItemClick() {
         LogUtil.d(TAG, "recyclerViewItemClick: ");
+        Activity activity = getActivity();
+        if (activity != null) {
+            Intent intent = new Intent(activity, DetailViewActivity.class);
+            activity.startActivity(intent);
+        }
+
     }
 
     private ArrayList<String> getDatas() {

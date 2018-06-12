@@ -29,6 +29,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".content.view.DetailViewActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!--Image Selector Entry-->
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"

@@ -9,4 +9,5 @@
     <color name="colorAccent2">#FF40B1</color>
     <color name="colorAccent3">#FF40C1</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGray2">#FDFDFD</color>
 </resources>
