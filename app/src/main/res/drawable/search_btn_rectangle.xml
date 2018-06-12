@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners android:radius="5dp" />
+    <size
+        android:width="@dimen/login_edit_width"
+        android:height="@dimen/login_edit_height" />
+
+    <solid android:color="@color/colorWhite" />
+</shape>
